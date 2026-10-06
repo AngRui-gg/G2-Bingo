@@ -25,10 +25,10 @@
 
                     //Resto del cartón
                     $resto = [];
-                    $blancos = 0;
+                    $blancos = count(array_keys($columna60, "-", true)); // empezamos contando los "-" de la columna del 60
                     for ($i = 0; $i < 18; $i++) {
                         $valor = mt_rand(0, 1);
-                        if ($valor === 0 && $blancos < 6) {   // máximo 6 blancos
+                        if ($valor === 0 && $blancos < 6) {   // máximo 6 blancos en TODO el cartón
                             $resto[] = 0;
                             $blancos++;
                         } else {
@@ -36,22 +36,48 @@
                         }
                     }
 
-                    // Sustituir 0 por "-" y 1 por un número del 1 al 60 sin repetir numeros o valores
-                    for ($i = 0; $i < 18; $i++) {
-                        if ($resto[$i] === 0) {
-                            $resto[$i] = "-";
-                        } else {
-                            do {
-                                $numero = mt_rand(1, 60);
-                            } while (in_array($numero, $usados));
-                            $usados[] = $numero;
-                            $resto[$i] = $numero;
+                    // Sustituir 0 por "-" y 1 por un número de su columna, sin repetir, y ordenados
+                    for ($col = 0; $col < 6; $col++) {
+                        $numerosColumna = [];
+
+                        // Recorremos las 3 filas de esta columna
+                        for ($f = 0; $f < 3; $f++) 
+                            {
+                            $pos = $f * 6 + $col;
+                            if ($resto[$pos] === 0) 
+                            {
+                                $resto[$pos] = "-";
+                            } 
+                            else 
+                            {
+                                do 
+                                {
+                                    $numero = mt_rand($col * 10 + 1, $col * 10 + 10); // rango de la columna
+                                } while (in_array($numero, $usados));
+                                $usados[] = $numero;
+                                $numerosColumna[] = $numero;
+                            }
+                        }
+
+                        sort($numerosColumna); // de menor a mayor
+
+                        // Colocamos los números ordenados en las posiciones que eran 1
+                        $k = 0;
+                        for ($f = 0; $f < 3; $f++) 
+                        {
+                            $pos = $f * 6 + $col;
+                            if ($resto[$pos] === 1) 
+                            {
+                                $resto[$pos] = $numerosColumna[$k];
+                                $k++;
+                            }
                         }
                     }
 
                     // Dividir el array en tres filas de 6 y añadir la columna del 60
                     $carton = array_chunk($resto, 6);
-                    for ($f = 0; $f < 3; $f++) {
+                    for ($f = 0; $f < 3; $f++) 
+                    {
                         $carton[$f][] = $columna60[$f];
                     }
 

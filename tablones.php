@@ -18,7 +18,8 @@
 
                     //Columna del 60
                     $columna60 = ["-", "-", "-"];
-                    if (mt_rand(1, 4) === 1) {            // si sale el 1: el 60 está en el cartón
+                    if (mt_rand(1, 4) === 1) // si sale el 1: el 60 está en el cartón
+                    {            
                         $columna60[mt_rand(0, 2)] = 60;
                         $usados[] = 60;
                     }
@@ -26,23 +27,28 @@
                     //Resto del cartón
                     $resto = [];
                     $blancos = count(array_keys($columna60, "-", true)); // empezamos contando los "-" de la columna del 60
-                    for ($i = 0; $i < 18; $i++) {
+                    for ($i = 0; $i < 18; $i++) 
+                    {
                         $valor = mt_rand(0, 1);
-                        if ($valor === 0 && $blancos < 6) {   // máximo 6 blancos en TODO el cartón
+                        if ($valor === 0 && $blancos < 6) // máximo 6 blancos en TODO el cartón
+                        {   
                             $resto[] = 0;
                             $blancos++;
-                        } else {
+                        } 
+                        else 
+                        {
                             $resto[] = 1;
                         }
                     }
 
                     // Sustituir 0 por "-" y 1 por un número de su columna, sin repetir, y ordenados
-                    for ($col = 0; $col < 6; $col++) {
+                    for ($col = 0; $col < 6; $col++) 
+                    {
                         $numerosColumna = [];
 
                         // Recorremos las 3 filas de esta columna
                         for ($f = 0; $f < 3; $f++) 
-                            {
+                        {
                             $pos = $f * 6 + $col;
                             if ($resto[$pos] === 0) 
                             {

@@ -95,7 +95,7 @@
                     
                     var_dump($carton);
 
-                    // ---- Seguimos sacando el resto de bolas del bombo ----
+                    // Seguimos sacando el resto de bolas del bombo
                     $jugador = 1;
                     $bingo = false;
 
@@ -114,9 +114,20 @@
                             }
                         }
 
-                        // Bingo: todo el cartón a 0 (blancos y tachados valen 0)
-                        $suma = array_sum($carton[0]) + array_sum($carton[1]) + array_sum($carton[2]);
-                        if ($suma === 0)
+                        // Bingo: recorrer el cartón y comprobar si queda algún número sin tachar
+                        $completo = true;
+                        foreach ($carton as $fila)
+                        {
+                            foreach ($fila as $casilla)
+                            {
+                                if ($casilla !== 0)
+                                {
+                                    $completo = false;
+                                }
+                            }
+                        }
+
+                        if ($completo)
                         {
                             $bingo = true;
                             echo "<h2>¡BINGO! Gana el Jugador $jugador con el Cartón $c (en la bola nº ".($b + 1).")</h2>";

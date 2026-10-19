@@ -1,7 +1,7 @@
 <?php
-require '/generarEspacio.php';
-require  '/rellenarNumCarton.php';
-require  '/bombo.php';
+require 'generarEspacio.php';
+require  'rellenarNumCarton.php';
+require  'bombo.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -16,11 +16,11 @@ for ($c = 1; $c <= 1; $c++) {
     $carton = generarEspacio();
     $carton = rellenarNumCarton($carton);
     echo '<h2>Cartón inicial</h2><div>';
-    print_r($carton);
+    var_dump($carton);
     echo '</div>';
     $carton = bombo($carton);
     echo '<h2>Cartón final</h2><div>';
-    print_r($carton);
+    var_dump($carton);
     echo '</div>';
 }
 ?>
